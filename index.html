@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://kit.fontawesome.com/87079675bc.js" crossorigin="anonymous"></script>
+    <title>Login</title>
+</head>
+<body>
+
+<div class="grid grid-cols-2 min-h-screen">
+  <div class="bg-[#1d232a] flex items-center justify-center">
+    <form id="loginForm" class="w-96 py-8 px-6 bg-white rounded-xl max-w-sm mx-auto content-center">
+      <h1 class="font-bold text-center">Sign in to ROCS</h1>
+      <h1 class="text-xs text-center mb-4">Welcome back! Please sign in to continue</h1>
+
+      <label for="username" class="ml-2 text-sm text-[#212126] font-semibold">Username</label>
+      <input type="text" id="username" class="border-[#dedede] py-3 px-4 text-xs rounded-lg h-[30px] outline-none border mt-1 mb-1 w-full" required><br><br>
+
+      <label for="password" class="ml-2 text-sm text-[#212126] font-semibold">Password</label>
+      <input type="password" id="password" class="border-[#dedede] py-3 px-4 text-xs rounded-lg h-[30px] outline-none border mt-1 mb-1 w-full" required><br><br>
+
+      <label for="userType" class="ml-2 text-sm text-[#212126] font-semibold">User type</label>
+      <select id="userType" class="rounded-lg cursor-pointer text-sm">
+        <option value="admin" class="text-sm text-[#212126] font-semibold cursor-pointer">Admin</option>
+        <option value="regular" class="text-sm text-[#212126] font-semibold cursor-pointer">Regular</option>
+      </select><br><br>
+
+      <div class="grid place-content-center">
+        <button type="submit" class="text-center bg-[#393940] text-sm font-semibold hover:bg-[#42594C] text-white w-[200px] py-2 rounded-lg font-semibold mt-2 flex justify-center items-center">
+          Continue
+          <i class="fa-solid fa-caret-right ml-2"></i>
+        </button>
+      </div>
+    </form>
+  </div>
+  <div class="mx-auto content-center flex items-center justify-center">
+    <img src="img/pixelcut-export.png" height="150" width="150" alt="">
+  </div>
+</div>
+
+<script>
+  document.getElementById('loginForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+    const userType = document.getElementById('userType').value;
+
+    const adminCredentials = {
+        username: 'adminUser',
+        password: 'adminPass123'
+    };
+
+    if (userType === 'admin') {
+        if (username === adminCredentials.username && password === adminCredentials.password) {
+            Swal.fire({
+                title: "Good job!",
+                text: "It's a pleasure to see you again!",
+                icon: "success"
+            }).then(() => {
+                const user = UserFactory.createUser(userType, username);
+                window.location.href = '/admin.html';
+            });
+        } else {
+            Swal.fire({
+                title: "Error",
+                text: "Your admin credentials are incorrect",
+                icon: "error"
+            });
+        }
+    } else {
+        Swal.fire({
+            title: "Welcome!",
+            text: "You have successfully logged in as a regular user.",
+            icon: "success"
+        }).then(() => {
+            const user = UserFactory.createUser(userType, username);
+            window.location.href = '/regular.html';
+        });
+    }
+  });
+
+  class Admin {
+      constructor(username) {
+          this.username = username;
+          this.role = "admin";
+      }
+
+      accessLevel() {
+          return "Nivel de acceso total: Puede administrar el sistema.";
+      }
+  }
+
+  class RegularUser {
+      constructor(username) {
+          this.username = username;
+          this.role = "regular";
+      }
+
+      accessLevel() {
+          return "Nivel de acceso limitado: Solo puede ver el contenido.";
+      }
+  }
+
+  class UserFactory {
+      static createUser(type, username) {
+          if (type === 'admin') {
+              return new Admin(username);
+          } else if (type === 'regular') {
+              return new RegularUser(username);
+          }
+      }
+  }
+</script>
+
+</body>
+</html>

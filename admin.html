@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://kit.fontawesome.com/87079675bc.js" crossorigin="anonymous"></script>
+  <title>Admin</title>
+</head>
+<body>
+  <h1 class="flex justify-center mt-3 font-semibold text-xl ">Book Management System 📚</h1>
+  
+  <div class="flex justify-center mt-9">
+    <textarea class="w-[500px] rounded-lg text-center border" id="bookData" placeholder="Enter book data (Title, Author, Format) separated by commas..."></textarea>
+  </div>
+  
+  <div class="grid place-content-center">
+    <button id="addBook" class="block text-center bg-[#393940] text-sm font-semibold hover:bg-[#42594C] text-white w-[200px] py-2 rounded-lg font-semibold mt-2 flex justify-center items-center">
+      Add book
+      <i class="fa-solid fa-plus ml-2"></i>
+    </button>
+  </div>
+  
+  <h2 class="flex justify-center mt-14 font-semibold text-base">Book list:</h2>
+  <ul id="bookList" class="mt-3 font-semibold text-sm text-emerald-500 list-disc flex flex-col items-center"></ul>
+  <h2 class="flex justify-center mt-9 font-semibold text-sm text-red-700">If you reload the page, you will delete the list ⚠️</h2>
+
+  <script>
+    class Book {
+      constructor(title, author, format) {
+        this.title = title.trim();
+        this.author = author.trim();
+        this.format = format.trim();
+      }
+
+      getInfo() {
+        return `${this.title} by ${this.author} [${this.format}]`;
+      }
+    }
+
+    function addBook(bookData) {
+      try {
+        const book = new Book(...bookData.split(','));
+        
+        const listItem = document.createElement('li');
+        listItem.textContent = book.getInfo();
+        listItem.className = "text-center"; 
+        document.getElementById('bookList').appendChild(listItem);
+
+        document.getElementById('bookData').value = '';
+      } catch (error) {
+        alert("Error: Invalid book data format. Please enter title, author, and format separated by commas.");
+      }
+    }
+
+    document.getElementById('addBook').addEventListener('click', () => {
+        Swal.fire({
+  title: "Book added!",
+  text: "Now you can see your book in the list!",
+  imageUrl: "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExb3oxb28xbnRsZXM2eTY2MHpucXFraTNybTM3amJkMThvbWU4MzFmZCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/SiMcadhDEZDm93GmTL/giphy.gif",
+  imageWidth: 300,
+  imageHeight: 200,
+  imageAlt: "Custom image",
+
+});
+      const bookData = document.getElementById('bookData').value;
+      addBook(bookData);
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ROCS Books</title>
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css" rel="stylesheet" type="text/css" />
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+  <h1 class="flex justify-center mt-5 font-semibold text-2xl">The best books</h1>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-4" id="bookList"></div>
+
+  <script>
+    
+    const books = [
+      {
+        title: "Politics",
+        description: "An exploration of the foundations of modern politics and its impact on society.",
+        format: "Physical",
+        author: "Aristotle",
+        imageUrl: "img/libro2.jpg",
+        url: "https://openlibrary.org/works/OL16247898W/%CE%A0%CE%BF%CE%BB%CE%B9%CF%84%CE%B9%CE%BA%CE%AC_%28Politik%C3%A1%29",
+      },
+      {
+        title: "The Prince",
+        description: "A political treatise that offers advice on how to govern and maintain power.",
+        format: "Physical",
+        author: "Niccolò Machiavelli",
+        imageUrl: "img/libro1.jpg",
+        url: "https://openlibrary.org/works/OL1089297W/The_Prince",
+      },
+      {
+        title: "1984",
+        description: "A dystopian novel reflecting the consequences of totalitarianism and state surveillance.",
+        format: "Digital",
+        author: "George Orwell",
+        imageUrl: "img/1984.jpg",
+        url: "https://openlibrary.org/works/OL1168083W/Nineteen_Eighty-Four?edition=key%3A/books/OL33338961M",
+      },
+      {
+        title: "Democracy in America",
+        description: "An analysis of American democracy and its implications in the modern world.",
+        format: "Physical",
+        author: "Alexis de Tocqueville",
+        imageUrl: "img/libro3.jpg",
+        url: "https://openlibrary.org/works/OL278001W/De_la_d%C3%A9mocratie_en_Am%C3%A9rique?edition=key%3A/books/OL27958091M",
+      },
+      {
+        title: "Capitalism, Socialism and Democracy",
+        description: "A study on capitalism and its impact on global power structures.",
+        format: "Digital",
+        author: "Joseph Schumpeter",
+        imageUrl: "img/libro4.jpg",
+        url: "https://www.paginaindomita.com/capitalismo-socialismo-y-democracia-volumen-i/",
+      },
+      {
+        title: "About Cuba",
+        description: "A conversation examining the controversial interaction between the Cuban Revolution and the American Empire.",
+        format: "Physical",
+        author: "NOAM CHOMSKY and VIJAY PRASHAD",
+        imageUrl: "img/libro5.webp",
+        url: "https://www.casadellibro.com/libro-sobre-cuba/9788412878608/16322763",
+      }
+    ];
+
+    
+    function renderBooks() {
+      const bookList = document.getElementById('bookList');
+      bookList.innerHTML = ''; 
+
+      books.forEach(book => {
+        const card = document.createElement('div');
+        card.className = "card bg-base-100 shadow-xl";
+        card.innerHTML = `
+          <figure>
+            <img src="${book.imageUrl}" alt="${book.title}" class="w-[150px] h-[200px] hover:scale-125" />
+          </figure>
+          <div class="card-body">
+            <h2 class="card-title">${book.title}</h2>
+            <p>${book.description}</p>
+            <p>Author: ${book.author}</p>
+            <p>Format: ${book.format}</p>
+            <div class="card-actions justify-end">
+               <a href="${book.url}" class="btn btn-primary" target="_blank">More Information</a>
+            </div>
+          </div>
+        `;
+        bookList.appendChild(card);
+      });
+    }
+
+    renderBooks();
+  </script>
+</body>
+</html>
