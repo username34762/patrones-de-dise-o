@@ -10,7 +10,7 @@
 
 ###
 
-<p align="left">- Login for regular users and an admin section for the administrator<br>- Contains books for the regular user section and a feature to simulate adding books for the admin.</p>
+<p align="left">- Login for regular users and an admin section for the administrator<br>- Contains books for the regular user section and a feature to simulate adding books for the admin.<br>- This proyect use singleton to check the account type and factory to build the list of books</p>
 
 ###
 
